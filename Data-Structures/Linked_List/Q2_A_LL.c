@@ -101,9 +101,34 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
-{
-    /* add your code here */
+void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2) {
+	//LinkedList1: 1, 2, 3
+	//LinkedList2: 4, 5, 6, 7
+	
+	ListNode *cur1 = ll1->head;
+	ListNode *cur2 = ll2->head;
+	ListNode *tmp = NULL;
+
+
+
+	while (cur1 != NULL && cur2 != NULL) {
+		tmp = cur1->next;
+		cur1->next = cur2;
+
+		ll2->head = cur2->next;
+		cur2->next = tmp;
+
+		cur1 = tmp;
+		cur2 = ll2->head;
+		
+		ll1->size++;
+		ll2->size--;
+	}
+	
+
+	// The resulting linked lists are:
+	// LinkedList1: 1, 4, 2, 5, 3, 6
+	// LinkedList2: 7
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
