@@ -101,9 +101,35 @@ int main()
 
 /////////////////////////////////////////////////////////////////////////////////
 
-int isStackPairwiseConsecutive(Stack *s)
-{
-  /* add your code here */
+int isStackPairwiseConsecutive(Stack *s) {
+	if(s->ll.size % 2 != 0) {
+		return 0;
+	}	
+	
+	int flag = 1;
+	Stack newStack;
+	Stack *sp = &newStack;
+	newStack.ll.head = NULL;
+	newStack.ll.size = 0;
+
+	// 새로운 스택에 하나씩 옮겨 담자.
+	while(s->ll.size != 0) {
+		int top_value = pop(s);
+		push(sp, top_value);
+
+		int bottom_value = pop(s);
+		if (top_value -1 != bottom_value) {
+			flag = 0;
+		} 
+
+		push(sp, bottom_value);
+	}
+
+	while (sp->ll.size != 0) {
+		push(s, pop(sp));
+	}
+		
+	return flag;  
 }
 
 //////////////////////////////////////////////////////////////////////////////////

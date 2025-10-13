@@ -102,7 +102,34 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	int i;
+
+	if(ll == NULL || ll->size == 0) {
+		return;
+	}
+	
+	// 1. 앞부분 리스트의 마지막 노드 찾기
+	ListNode *lastNodeOfFront = ll->head;
+	for (i = 0; i < (ll->size - 1) / 2; i++) {
+		lastNodeOfFront = lastNodeOfFront->next;
+	} // 끝 지점 도달!
+
+	// 2. 뒷 부분 리스트 설정
+	resultBackList->head = lastNodeOfFront->next;
+
+	// 3. 연결 끊기
+	lastNodeOfFront->next = NULL;
+
+	// 4. 앞 부분 리스트 설정
+	resultFrontList->head = ll->head;
+
+	// 사이즈 업데이트
+	resultFrontList->size = (ll->size + 1) / 2;
+	resultBackList->size = (ll->size) / 2;
+
+	//원본  리스트 비우기
+	ll->head = NULL;
+	ll->size = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

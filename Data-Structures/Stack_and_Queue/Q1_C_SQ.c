@@ -116,7 +116,14 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	/* add your code here */
+	// 링크드 리스트에서 하나씩 꺼내서 큐에 넣기
+	ListNode *cur = ll->head;
+
+	while (cur != NULL) {
+		enqueue(q, cur->item);
+		cur = cur->next;
+	}
+	
 }
 
 void removeOddValues(Queue *q)

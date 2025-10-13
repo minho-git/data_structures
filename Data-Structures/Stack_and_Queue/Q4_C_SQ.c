@@ -110,9 +110,23 @@ int main()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void reverse(Queue *q)
-{
-/* add your code here */
+void reverse(Queue *q) {
+	// 큐에서 하나씩 빼서 스택에 옮겨 담는다.
+	// 다시 스택에서 큐로 옮겨 담으면 뒤집어 진다.
+
+	Stack stack;
+	Stack *sp = &stack;
+	stack.ll.size = 0;
+	stack.ll.head = NULL;
+	stack.ll.tail = NULL;
+
+	while (q->ll.size != 0) {
+		push(sp, dequeue(q));
+	}
+
+	while (sp->ll.size != 0) {
+		enqueue(q, pop(sp));
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

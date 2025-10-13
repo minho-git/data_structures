@@ -87,6 +87,48 @@ int main()
 void moveEvenItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	ListNode *previous = NULL;
+	ListNode *tail = ll->head;
+	ListNode *current = ll->head;
+	int i;
+
+	// 끝을 찾자.
+	while (tail->next != NULL) {
+		tail = tail->next;
+	}
+
+	for (i = 0; i < ll->size; i++) {
+		
+		// 짝수 노드가 이미 꼬리라면 루프 멈춰라.
+		if (current == tail) {
+			break;
+		}
+
+		// 짝수 노드를 찾자. 그리고 이전 노드 업데이트도 같이하자.
+		if (current->item % 2 != 0) {
+			previous = current;
+			current = current->next;
+
+		} else {
+			
+			if (previous == NULL) {
+				ll->head = current->next;
+				tail->next = current;
+				current->next = NULL;		
+				tail = current;		
+				
+				current = ll->head;
+			} else {
+
+				previous->next = current->next;
+				tail->next = current;
+				current->next = NULL;
+				tail = current;
+
+				current = previous->next;
+			}
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

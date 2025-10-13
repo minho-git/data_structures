@@ -109,9 +109,16 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
-void removeUntil(Stack *s, int value)
-{
-/* add your code here */
+void removeUntil(Stack *s, int value) {
+
+	while (s->ll.size > 0) {
+		int popped = pop(s);
+		if (popped == value) {
+			push(s, popped);
+			break;
+		}
+	}
+	
 }
 
 //////////////////////////////////////////////////////////////////////////////////
