@@ -88,9 +88,60 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void inOrderTraversal(BSTNode *root)
-{
-	 /* add your code here */
+// void dfs(BSTNode *node) {
+
+// 	if (node == NULL) {
+// 		return;
+// 	}
+
+// 	if (node->left != NULL) {
+// 		dfs(node->left);
+// 	}
+
+// 	printf("%d " , node->item);
+
+// 	if (node->right != NULL) {
+// 		dfs(node->right);
+// 	}	
+// }
+
+// void inOrderTraversal(BSTNode *root) {
+// 	if (root == NULL) {
+// 		return;
+// 	}
+
+// 	Stack s;
+// 	Stack *sp = &s;
+// 	sp->top = NULL;
+
+// 	dfs(root);
+// }
+
+void inOrderTraversal(BSTNode *root) {
+	//트리가 비었을 때
+	if (root == NULL) {
+			return;
+		}
+
+	// 스택 초기화
+	Stack s;
+	Stack *sp = &s;
+	sp->top = NULL;
+
+	BSTNode *current = root;
+
+	while (sp->top != NULL || current != NULL) {
+		while(current != NULL) {
+			push(sp, current);
+			current = current->left;
+		}
+		
+		BSTNode *popped = pop(sp);
+		printf("%d ", popped->item);
+
+		current = popped->right;
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

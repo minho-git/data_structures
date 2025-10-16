@@ -94,10 +94,50 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int maxHeight(BTNode *node)
 
-{
-    /* add your code here */
+// Top-down 방식
+// int dfs(BTNode *node, int height) {
+//     if (node == NULL) {
+//         return height -1;
+//     } 
+    
+//     int height1 = dfs(node->left, height + 1);
+//     int height2 = dfs(node->right, height + 1);
+
+//     if (height1 >= height2) {
+//         return height1;
+//     } else {
+//         return height2;
+//     }
+// }
+
+// int maxHeight(BTNode *node) {
+
+//     if (node == NULL) {
+//         return -1;
+//     }
+
+//     int max;
+//     max = dfs(node, 0);
+//     return max;
+// }
+
+// Bottom-up 방식
+int maxHeight(BTNode *node) {
+
+    if (node == NULL) {
+        return -1;
+    }
+
+    int height1 = 1 + maxHeight(node->left);
+    int height2 = 1 + maxHeight(node->right);
+
+    if (height1 >= height2) {
+        return height1;
+    } else {
+        return height2;
+    }
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

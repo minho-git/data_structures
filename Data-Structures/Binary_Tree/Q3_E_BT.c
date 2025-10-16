@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section E - Binary Trees Questions
@@ -98,10 +98,18 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int countOneChildNodes(BTNode *node)
+int countOneChildNodes(BTNode *node) {
+    if (node == NULL) {
+        return 0;
+    }
 
-{
-    /* add your code here */
+    int count = 0;
+
+    if((node->left == NULL) != (node->right == NULL)) {
+        count = 1;
+    }
+
+    return count + countOneChildNodes(node->left) +countOneChildNodes(node->right);  
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

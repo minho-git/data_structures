@@ -89,18 +89,78 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void postOrderIterativeS2(BSTNode *root)
-{
-	 /* add your code here */
+void postOrderIterativeS2(BSTNode *root) {
+	if (root == NULL) {
+		return ;
+	}
+
+	Stack s1, s2;
+	BSTNode *popped;
+	
+	s1.top = NULL;
+	s2.top = NULL;
+	Stack *sp1 = &s1;
+	Stack *sp2 = &s2;
+
+	push(sp1, root);
+
+	while(sp1->top != NULL) {
+		popped = pop(sp1);
+		push(sp2, popped);
+
+		if (popped->left != NULL) {
+			push(sp1, popped->left);
+		}
+		
+		if (popped->right != NULL) {
+			push(sp1, popped->right);
+		}
+	}
+
+	while (s2.top != NULL) {
+		popped = pop(sp2);
+		printf("%d ", popped->item);
+	}
 }
 
 /* Given a binary search tree and a key, this function
    deletes the key and returns the new root. Make recursive function. */
-BSTNode* removeNodeFromTree(BSTNode *root, int value)
-{
-	/* add your code here */
+BSTNode* removeNodeFromTree(BSTNode *root, int value) {
+
+	if (root == NULL) {
+		return NULL;
+	}
+	
+	// 1. 삭제할 노드 찾기
+	if (value < root->item) {
+		removeNodeFromTree(root->right, value);
+	}
+
+	// 1. 삭제할 노드 위치 찾기
+	// 2. 후계자 찾기
+
+
+
+
+
+	
+
+	// BST 노드 삭제 
+	// 1. 자식이 없는 노드 삭제
+	// : 그 노드를 삭제하고, 부모 노드와 연결 끊기
+	// 2. 자식이 하나인 노드 삭제
+	// : 삭제할 노드를 건너뛰고, 부모 노드와 삭제할 노드의 자식과 연결
+	// 3. 자식이 2개인 노드 삭제
+	// 1) 후계자 찾기
+	// - 후계자: 오른쪽 서브트리에서 가장 작은 값을 가진 노드
+	// - 후계자 찾는법
+	// : 오른쪽으로 한 칸 이동한 뒤, 왼쪽 자식이 없을 때까지 계속 내려가면 된다.
+	// 2) 후계자 노드의 값을 삭제할 노드에 덮어쓴다.
+	// 3) 후계자 노드 삭제 
+	// : 왼쪽 끝이므로 왼쪽 자식은 없지만, 오른쪽 자식이 있거나, 자식이 없을 경우 2개가 있다.
+
 }
-///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){
 	if (*node == NULL)

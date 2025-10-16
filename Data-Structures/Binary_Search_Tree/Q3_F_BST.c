@@ -89,9 +89,32 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void preOrderIterative(BSTNode *root)
-{
-	 /* add your code here */
+void preOrderIterative(BSTNode *root) {
+	if (root == NULL) {
+			return;
+		}
+
+	// 스택 초기화
+	Stack s;
+	Stack *sp = &s;
+	sp->top = NULL;
+
+	BSTNode *poppedNode;
+	push(sp, root);
+
+	while (sp->top != NULL) {
+		poppedNode = pop(sp);
+		printf("%d ", poppedNode->item);
+
+		if (poppedNode->right != NULL) {
+			push(sp, poppedNode->right);
+		}
+
+		if (poppedNode->left != NULL) {
+			push(sp, poppedNode->left);
+		}
+
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
