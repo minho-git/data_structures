@@ -126,39 +126,51 @@ void postOrderIterativeS2(BSTNode *root) {
 /* Given a binary search tree and a key, this function
    deletes the key and returns the new root. Make recursive function. */
 BSTNode* removeNodeFromTree(BSTNode *root, int value) {
+// 기본 사례: 트리가 비어있으면, 아무것도 하지 않고 반환합니다.
+    if (root == NULL) {
+        return NULL;
+    }
 
-	if (root == NULL) {
-		return NULL;
-	}
-	
-	// 1. 삭제할 노드 찾기
-	if (value < root->item) {
-		removeNodeFromTree(root->right, value);
-	}
+    // 삭제할 노드를 찾습니다.
+    if (value < root->item) {
+        // 값이 현재 노드보다 작으면 왼쪽 서브트리로 이동합니다.
+        // 재귀 호출의 결과를 root->left에 다시 할당하여 트리의 연결을 업데이트합니다.
+        root->left = removeNodeFromTree(root->left, value);
+    }
+    else if (value > root->item) {
+        // 값이 현재 노드보다 크면 오른쪽 서브트리로 이동합니다.
+        root->right = removeNodeFromTree(root->right, value);
+    }
+    else {
+        // 삭제할 노드를 찾았습니다 (value == root->item).
 
-	// 1. 삭제할 노드 위치 찾기
-	// 2. 후계자 찾기
+        // 경우 1: 자식이 없거나 오른쪽 자식만 있는 경우
+        if (root->left == NULL) {
+            BSTNode *temp = root->right;
+            free(root);
+            return temp; // 오른쪽 자식(또는 NULL)이 이 서브트리의 새로운 루트가 됩니다.
+        }
+        // 경우 2: 왼쪽 자식만 있는 경우
+        else if (root->right == NULL) {
+            BSTNode *temp = root->left;
+            free(root);
+            return temp; // 왼쪽 자식이 새로운 루트가 됩니다.
+        }
 
+        // 경우 3: 자식이 두 개인 노드
+        // 오른쪽 서브트리에서 가장 작은 노드(in-order successor)를 찾습니다.
+        BSTNode* temp = root->right;
+        while (temp && temp->left != NULL) {
+            temp = temp->left;
+        }
 
+        // 찾은 후계자(successor)의 값을 현재 노드에 복사합니다.
+        root->item = temp->item;
 
-
-
-	
-
-	// BST 노드 삭제 
-	// 1. 자식이 없는 노드 삭제
-	// : 그 노드를 삭제하고, 부모 노드와 연결 끊기
-	// 2. 자식이 하나인 노드 삭제
-	// : 삭제할 노드를 건너뛰고, 부모 노드와 삭제할 노드의 자식과 연결
-	// 3. 자식이 2개인 노드 삭제
-	// 1) 후계자 찾기
-	// - 후계자: 오른쪽 서브트리에서 가장 작은 값을 가진 노드
-	// - 후계자 찾는법
-	// : 오른쪽으로 한 칸 이동한 뒤, 왼쪽 자식이 없을 때까지 계속 내려가면 된다.
-	// 2) 후계자 노드의 값을 삭제할 노드에 덮어쓴다.
-	// 3) 후계자 노드 삭제 
-	// : 왼쪽 끝이므로 왼쪽 자식은 없지만, 오른쪽 자식이 있거나, 자식이 없을 경우 2개가 있다.
-
+        // 오른쪽 서브트리에서 후계자 노드를 삭제합니다.
+        root->right = removeNodeFromTree(root->right, temp->item);
+    }
+    return root;
 }
 /////////////////////////////////////////////////////////////////////////////
 
